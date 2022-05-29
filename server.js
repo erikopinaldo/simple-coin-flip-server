@@ -3,12 +3,6 @@ const fs = require('fs')
 const url = require('url');
 const querystring = require('querystring');
 const figlet = require('figlet')
-const flipCoin = () => {
-    const randomNum = Math.floor(Math.random() * 2)
-    
-    if (randomNum === 1) return 'head'
-    else return 'tail'
-}
 
 const server = http.createServer((req, res) => {
   const page = url.parse(req.url).pathname;
@@ -37,11 +31,19 @@ const server = http.createServer((req, res) => {
   }
   else if (page == '/api/result') {
     res.writeHead(200, {'Content-Type': 'application/json'});
+    const flipCoin = () => {
+      const randomNum = Math.floor(Math.random() * 2)
+      
+      if (randomNum === 1) return 'head'
+      else return 'tail'
+    }
+
     const objToJson = {
         result: flipCoin()
     }
+    
     res.end(JSON.stringify(objToJson));
-  }//else if
+  }
   else if (page == '/css/style.css'){
     fs.readFile('css/style.css', function(err, data) {
       res.write(data);
